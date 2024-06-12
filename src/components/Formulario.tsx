@@ -147,7 +147,7 @@ export const Formulario = () => {
         </form>
       </Form>
 
-      <AlertDialog open={true}>
+      <AlertDialog open={showDialog}>
         <AlertDialogContent className="bg-white h-screen flex flex-col justify-center">
           <AlertDialogHeader>
             <AlertDialogTitle className="text-color-p">
