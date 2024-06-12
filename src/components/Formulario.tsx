@@ -65,7 +65,7 @@ export const Formulario = () => {
     baeNumber: string
   }) => {
     setLoading(true)
-    const hasSent = await sendData(formData)
+    const hasSent: boolean = await sendData(formData)
 
     if (hasSent) {
       form.reset()

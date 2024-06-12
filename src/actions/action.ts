@@ -26,6 +26,16 @@ export default async function sendData(formData: {
 
   const transporter = mailer.createTransport(optionsMailer)
 
+  await new Promise((res, rej) => {
+    transporter.verify((error, sucess) => {
+      if (error) {
+        rej(error)
+      } else {
+        res(sucess)
+      }
+    })
+  })
+
   const dataAtual = formatarData(new Date())
   const mailOptions = {
     from: process.env.EMAIL_USER,
@@ -41,10 +51,16 @@ export default async function sendData(formData: {
   `,
   }
 
-  try {
-    await transporter.sendMail(mailOptions)
-    return true
-  } catch (error) {
-    return false
-  }
+  return await new Promise<boolean>((res, rej) => {
+    transporter.sendMail(mailOptions, (error, info) => {
+      if (error) {
+        console.error(error)
+        rej(false)
+        return false
+      } else {
+        console.log(info)
+        res(true)
+      }
+    })
+  })
 }
